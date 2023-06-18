@@ -42,10 +42,10 @@ public class ObjectPoolManager : MonoBehaviour
         //if (obj.CompareTag("Tile"))
         int temp = 0;
 
-        //if (obj.CompareTag("Meteor"))
-        //{
-        //    temp = 1;
-        //}
+        if (obj.CompareTag("House"))
+        {
+            temp = 1;
+        }
 
         SupportFunctions.MoveBetweenLists(objectPools[temp].activeList, objectPools[temp].inactiveList, obj);
     }
@@ -61,5 +61,5 @@ public struct ObjectPool
 
 public enum ObjectID
 {
-    Tile
+    Tile,House
 }
