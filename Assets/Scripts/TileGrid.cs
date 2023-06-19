@@ -29,5 +29,5 @@ public struct Column
 
 public enum TileType
 {
-    Road, Building,
+    Road, Building
 }
