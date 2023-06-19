@@ -12,15 +12,15 @@ public class TileTyping: ISetupStep
         InitialTyping();
         RetypeToBuilding();
     }
-    public void InitialTyping()
+    void InitialTyping()
     {
         int tempGroupsIndex=0;
 
-        for (int x = 0; x < TileGrid.xWidth; x++)
+        for (int x = 0; x < TileGrid.Instance.xWidth; x++)
         {
-            for (int z = 0; z < TileGrid.zLength; z++)
+            for (int z = 0; z < TileGrid.Instance.zLength; z++)
             {
-                tempTile = TileGrid.column[x].row[z];
+                tempTile = TileGrid.Instance.column[x].row[z];
 
                 if (x%2 == 0 && z%2==0) // tile is a building tile
                 {
@@ -31,12 +31,12 @@ public class TileTyping: ISetupStep
                     tempGroups[tempGroupsIndex].Add(tempTile);
                     tempGroupsIndex++;
 
-                    TileGrid.buildingTiles.Add(tempTile);
+                    TileGrid.Instance.buildingTiles.Add(tempTile);
                     continue;
                 }
                 else 
                 {
-                    TileGrid.roadTiles.Add(tempTile);
+                    TileGrid.Instance.roadTiles.Add(tempTile);
                 }
                 
                 if (x % 2 == 0 && z % 2 == 1)
@@ -60,7 +60,7 @@ public class TileTyping: ISetupStep
         }
     }
 
-    public void RetypeToBuilding()
+    void RetypeToBuilding()
     {
         int potentialBuilding;
         int group1, group2;
@@ -77,7 +77,7 @@ public class TileTyping: ISetupStep
                 tempTile.tileType = TileType.Building;
                 tempTile.tempGroupIndex = group1;
                 tempGroups[group1].Add(tempTile);
-                SupportFunctions.MoveBetweenLists(TileGrid.roadTiles,TileGrid.buildingTiles,tempTile);
+                SupportFunctions.MoveBetweenLists(TileGrid.Instance.roadTiles, TileGrid.Instance.buildingTiles,tempTile);
 
                 while (tempGroups[group2].Count>0)
                 {
@@ -90,8 +90,4 @@ public class TileTyping: ISetupStep
         }
         tempGroups = null;
     }
-}
-public enum TileType
-{
-    Road, Building
 }

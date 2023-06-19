@@ -1,87 +1,50 @@
 using UnityEngine;
 
 public class BuildingPlacement:ISetupStep
-{
+{    
+    GameObject tempBuilding;
+    bool n, w, e, s;
+    Vector3 position = new();
     public void RunStep()
     {
-        PlaceBuildings();
-    }
-
-    void PlaceBuildings()
-    {
-        GameObject tempHouse;
-        Vector3 position = new();
-        foreach (Tile tempTile in TileGrid.buildingTiles)
+        foreach (Tile tempTile in TileGrid.Instance.buildingTiles)
         {
-            position.x = tempTile.xCord - 0.25f;
-            position.z = tempTile.zCord + 0.25f;
-
-            tempHouse = ObjectPoolManager.Instance.ReleaseObject(ObjectID.House);
-            tempHouse.transform.position = position;
-            tempHouse.SetActive(true);
-
-            position.x = tempTile.xCord + 0.25f;
-            position.z = tempTile.zCord + 0.25f;
-
-            tempHouse = ObjectPoolManager.Instance.ReleaseObject(ObjectID.House);
-            tempHouse.transform.position = position;
-            tempHouse.SetActive(true);
-
-            position.x = tempTile.xCord - 0.25f;
-            position.z = tempTile.zCord - 0.25f;
-
-            tempHouse = ObjectPoolManager.Instance.ReleaseObject(ObjectID.House);
-            tempHouse.transform.position = position;
-            tempHouse.SetActive(true);
-
-            position.x = tempTile.xCord + 0.25f;
-            position.z = tempTile.zCord - 0.25f;
-
-            tempHouse = ObjectPoolManager.Instance.ReleaseObject(ObjectID.House);
-            tempHouse.transform.position = position;
-            tempHouse.SetActive(true);
+            PlaceHouses(tempTile);
         }
     }
-    //public void TextureRoads()
-    //{
-    //    bool n, w, e, s;
-    //    foreach (Tile tempTile in TileGrid.roadTiles)
-    //    {
-    //        if (tempTile.xCord == 0 || tempTile.xCord == TileGrid.xWidth - 1)
-    //        {
-    //            tempTile.GetComponentInChildren<Renderer>().material.mainTexture = roadTextures[8];
-    //            continue;
-    //        }
-    //        if (tempTile.zCord == 0 || tempTile.zCord == TileGrid.zLength - 1)
-    //        {
-    //            tempTile.GetComponentInChildren<Renderer>().material.mainTexture = roadTextures[6];
-    //            continue;
-    //        }
+    
+    void PlaceHouses(Tile tempTile)
+    {
+        n = tempTile.neighbourTiles[0] == null || tempTile.neighbourTiles[0].tileType == TileType.Building;
+        w = tempTile.neighbourTiles[1] == null || tempTile.neighbourTiles[1].tileType == TileType.Building;
+        e = tempTile.neighbourTiles[2] == null || tempTile.neighbourTiles[2].tileType == TileType.Building;
+        s = tempTile.neighbourTiles[3] == null || tempTile.neighbourTiles[3].tileType == TileType.Building;
 
-    //        n = tempTile.neighbourTiles[0].tileType == TileType.Road;
-    //        w = tempTile.neighbourTiles[1].tileType == TileType.Road;
-    //        e = tempTile.neighbourTiles[2].tileType == TileType.Road;
-    //        s = tempTile.neighbourTiles[3].tileType == TileType.Road;
+        for (int i = 0; i < 4; i++)
+        {
+            position.x = tempTile.xCord + (i % 2 == 0 ? -0.25f : 0.25f);
+            position.z = tempTile.zCord + (i < 2 ? 0.25f : -0.25f);
 
-    //        if (n)
-    //        {
-    //            if (w)
-    //            {
-    //                tempTile.GetComponentInChildren<Renderer>().material.mainTexture = e ? (s ? roadTextures[0] : roadTextures[1]) : (s ? roadTextures[2] : roadTextures[3]);
-    //            }
-    //            else
-    //            {
-    //                tempTile.GetComponentInChildren<Renderer>().material.mainTexture = e ? (s ? roadTextures[4] : roadTextures[5]) : roadTextures[6];
-    //            }
-    //            continue;
-    //        }
-    //        if (w)
-    //        {
-    //            tempTile.GetComponentInChildren<Renderer>().material.mainTexture = e ? (s ? roadTextures[7] : roadTextures[8]) : roadTextures[9];
-    //            continue;
-    //        }
-    //        tempTile.GetComponentInChildren<Renderer>().material.mainTexture = roadTextures[10];
+            if ((n && ((w && i == 0) || (e && i == 1))) || (s && ((w && i == 2) || (e && i == 3))))
+            {
+                tempBuilding = ObjectPoolManager.Instance.ReleaseObject(ObjectID.EmptyPatch);
+                goto end;
+            }
+            tempBuilding = ObjectPoolManager.Instance.ReleaseObject(ObjectID.House);
 
-    //    }
-    //}
+            if (!s && i > 1)
+            {
+                goto end;
+            }
+            tempBuilding.transform.Rotate(0, i % 2 == 0 ? 90 : -90, 0);
+            if (!n && i < 2)
+            {
+                tempBuilding.transform.Rotate(0, i % 2 == 0 ? 90 : -90, 0);
+            }
+
+        end:
+            tempBuilding.transform.position = position;
+            tempBuilding.SetActive(true);
+        }
+    }
 }
