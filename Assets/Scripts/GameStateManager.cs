@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager Instance { get; private set; }
-    public GameState gameState { get; private set; }
+    public GameState gameState;
     [SerializeField] GameObject menu;
 
     private void Awake()
@@ -46,6 +46,7 @@ public class GameStateManager : MonoBehaviour
         Application.Quit();
     }
 }
+[SerializeField]
 public enum GameState
 {
     MainMenu, Paused, Playing
