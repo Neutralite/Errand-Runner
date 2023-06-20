@@ -17,6 +17,7 @@ public class GameStateManager : MonoBehaviour
         {
             Instance = this;
         }
+        Time.timeScale = 0;
     }
     // Update is called once per frame
     void Update()

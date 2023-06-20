@@ -50,6 +50,10 @@ public class ObjectPoolManager : MonoBehaviour
         {
             temp = 2;
         }
+        if (obj.CompareTag("QuestMarker"))
+        {
+            temp = 3;
+        }
 
         SupportFunctions.MoveBetweenLists(objectPools[temp].activeList, objectPools[temp].inactiveList, obj);
     }
@@ -65,5 +69,5 @@ public struct ObjectPool
 
 public enum ObjectID
 {
-    Tile,EmptyPatch,House,x2
+    Tile,EmptyPatch,House,QuestMarker
 }

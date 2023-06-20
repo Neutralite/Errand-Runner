@@ -9,17 +9,21 @@ public class BuildingPlacement:ISetupStep
     {
         foreach (Tile tempTile in TileGrid.Instance.buildingTiles)
         {
+            EvaluateAdjacentTiles(tempTile);
             PlaceHouses(tempTile);
         }
     }
     
-    void PlaceHouses(Tile tempTile)
+    void EvaluateAdjacentTiles(Tile tempTile)
     {
         n = tempTile.neighbourTiles[0] == null || tempTile.neighbourTiles[0].tileType == TileType.Building;
         w = tempTile.neighbourTiles[1] == null || tempTile.neighbourTiles[1].tileType == TileType.Building;
         e = tempTile.neighbourTiles[2] == null || tempTile.neighbourTiles[2].tileType == TileType.Building;
         s = tempTile.neighbourTiles[3] == null || tempTile.neighbourTiles[3].tileType == TileType.Building;
+    }
 
+    void PlaceHouses(Tile tempTile)
+    {
         for (int i = 0; i < 4; i++)
         {
             position.x = tempTile.xCord + (i % 2 == 0 ? -0.25f : 0.25f);

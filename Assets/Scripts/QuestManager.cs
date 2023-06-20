@@ -5,7 +5,9 @@ public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance { get; private set; }
 
-    public List<QuestPoint> questPoints = new();
+    public List<Vector3> questPoints = new();
+
+    GameObject currentQuest;
 
     private void Awake()
     {
@@ -19,15 +21,10 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void SpawnQuest()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        currentQuest = ObjectPoolManager.Instance.ReleaseObject(ObjectID.QuestMarker);
+        currentQuest.transform.position = questPoints[Random.Range(0, questPoints.Count)];
+        currentQuest.SetActive(true);
     }
 }

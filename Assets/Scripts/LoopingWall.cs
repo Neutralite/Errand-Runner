@@ -24,12 +24,12 @@ public class LoopingWall : MonoBehaviour
         bool temp = other.CompareTag("Player");
         if (temp)
         {
-            other.GetComponent<CharacterController>().enabled = false;
+            Player.Instance.controller.enabled = false;
         }
         other.transform.position += change;
         if (temp)
         {
-            other.GetComponent<CharacterController>().enabled = true;
+            Player.Instance.controller.enabled = true;
         }
     }
 }

@@ -6,9 +6,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float speed=1f;
 
-    [SerializeField]
-    CharacterController controller;
-
     void Update()
     {
         x = Input.GetAxis("Horizontal");
@@ -16,6 +13,6 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        controller.Move(move * speed * Time.deltaTime);
+        Player.Instance.controller.Move(move * speed * Time.deltaTime);
     }
 }
