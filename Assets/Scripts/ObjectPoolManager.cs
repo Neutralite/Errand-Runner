@@ -54,6 +54,10 @@ public class ObjectPoolManager : MonoBehaviour
         {
             temp = 3;
         }
+        if (obj.CompareTag("Isolated"))
+        {
+            temp = 4;
+        }
 
         SupportFunctions.MoveBetweenLists(objectPools[temp].activeList, objectPools[temp].inactiveList, obj);
     }
@@ -69,5 +73,5 @@ public struct ObjectPool
 
 public enum ObjectID
 {
-    Tile,EmptyPatch,House,QuestMarker
+    Tile,EmptyPatch,House,QuestMarker, Isolated
 }

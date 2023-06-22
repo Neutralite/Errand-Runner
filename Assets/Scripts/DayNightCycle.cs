@@ -3,11 +3,24 @@ using UnityEngine;
 
 public class DayNightCycle : MonoBehaviour
 {
+    public static DayNightCycle Instance { get; private set; }
+
     [SerializeField]
     Light sun;
     [SerializeField]
     float speed;
     public TimeofDay timeofDay;
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     // Update is called once per frame
     void Update()

@@ -6,30 +6,27 @@ public class LoopingWall : MonoBehaviour
     static float offset = 0.05f;
     private void OnTriggerEnter(Collider other)
     {
-        switch (transform.parent.localEulerAngles.y)
+        if (other.CompareTag("Player"))
         {
-            case 0:
-                change = Vector3.left * (TileGrid.Instance.xWidth - offset);
-                break;
-            case 90:
-                change = Vector3.forward * (TileGrid.Instance.zLength - offset);
-                break;
-            case 180:
-                change = Vector3.right * (TileGrid.Instance.xWidth - offset);
-                break;
-            case 270:
-                change = Vector3.back * (TileGrid.Instance.zLength - offset);
-                break;
-        }
-        bool temp = other.CompareTag("Player");
-        if (temp)
-        {
+            switch (transform.parent.localEulerAngles.y)
+            {
+                case 0:
+                    change = Vector3.left * (TileGrid.Instance.xWidth - offset);
+                    break;
+                case 90:
+                    change = Vector3.forward * (TileGrid.Instance.zLength - offset);
+                    break;
+                case 180:
+                    change = Vector3.right * (TileGrid.Instance.xWidth - offset);
+                    break;
+                case 270:
+                    change = Vector3.back * (TileGrid.Instance.zLength - offset);
+                    break;
+            }
             Player.Instance.controller.enabled = false;
-        }
-        other.transform.position += change;
-        if (temp)
-        {
+            other.transform.position += change;
             Player.Instance.controller.enabled = true;
         }
+        
     }
 }

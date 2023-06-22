@@ -1,10 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [SerializeField]
+    float enemySpawnDelay,spawnTimer;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -28,6 +29,27 @@ public class GameManager : MonoBehaviour
         Player.Instance.controller.enabled = true;
 
         QuestManager.Instance.SpawnQuest();
+    }
+
+    private void Update()
+    {
+        if (GameStateManager.Instance.gameState == GameState.Playing)
+        {
+            if (DayNightCycle.Instance.timeofDay == TimeofDay.Day)
+            {
+                spawnTimer += Time.deltaTime;
+                if (spawnTimer > enemySpawnDelay)
+                {
+                    IsolatedManager.Instance.SpawnIsolated();
+                    spawnTimer = 0;
+                }
+            }
+
+            if (HealthManager.Instance.Health == 0 || ScoreManager.Instance.Score == 20)
+            {
+                GameStateManager.Instance.Restart();
+            }
+        }
     }
 }
 

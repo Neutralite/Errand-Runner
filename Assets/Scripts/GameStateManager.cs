@@ -5,7 +5,7 @@ public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager Instance { get; private set; }
     public GameState gameState;
-    [SerializeField] GameObject menu;
+    [SerializeField] GameObject menu,gameUI;
 
     private void Awake()
     {
@@ -34,6 +34,7 @@ public class GameStateManager : MonoBehaviour
         Time.timeScale = gameState == GameState.Playing ? 1 : 0;
         Cursor.lockState = gameState == GameState.Playing ? CursorLockMode.Locked : CursorLockMode.None;
         menu.SetActive(gameState != GameState.Playing);
+        gameUI.SetActive(gameState == GameState.Playing);
     }
 
     public void Restart()

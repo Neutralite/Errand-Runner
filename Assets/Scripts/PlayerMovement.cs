@@ -8,11 +8,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        x = Input.GetAxis("Horizontal");
-        z = Input.GetAxis("Vertical");
+        if (GameStateManager.Instance.gameState== GameState.Playing)
+        {
+            x = Input.GetAxis("Horizontal");
+            z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * z;
+            Vector3 move = transform.right * x + transform.forward * z;
 
-        Player.Instance.controller.Move(move * speed * Time.deltaTime);
+            Player.Instance.controller.Move(move * speed * Time.deltaTime);
+        }
     }
 }

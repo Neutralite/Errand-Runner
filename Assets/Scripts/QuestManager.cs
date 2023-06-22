@@ -7,7 +7,7 @@ public class QuestManager : MonoBehaviour
 
     public List<Vector3> questPoints = new();
 
-    GameObject currentQuest;
+    public GameObject currentQuest;
 
     private void Awake()
     {

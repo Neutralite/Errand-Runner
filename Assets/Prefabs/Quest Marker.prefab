@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2781137202925988794}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Quest Marker
   m_TagString: QuestMarker
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 8362905045153105474}
   - component: {fileID: 5715822688256157993}
   - component: {fileID: 7505093494278411832}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: QuestMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
